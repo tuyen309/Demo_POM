@@ -1,0 +1,31 @@
+name: Python CI
+
+# Kích hoạt workflow khi có sự kiện push hoặc pull_request
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Chạy trên môi trường Ubuntu
+
+    steps:
+    - name: Checkout code  # Lấy mã nguồn từ repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python  # Cài đặt Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies  # Cài đặt các thư viện cần thiết
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+
+    - name: Run tests  # Chạy pytest
+      run: pytest
